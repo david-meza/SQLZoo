@@ -205,6 +205,73 @@ Nick Sarlo (https://github.com/sicknarlo)
     FROM goal JOIN game ON goal.matchid=id
     WHERE stadium = 'National Stadium, Warsaw'
 
-    
+### More difficult Questions
 
+    SELECT DISTINCT(player)
+    FROM game JOIN goal ON matchid = id
+    WHERE (team1='GER' OR team2='GER') AND teamid != 'GER'
+
+
+    SELECT teamname, COUNT(*)
+    FROM eteam JOIN goal ON id=teamid
+    GROUP BY teamname
+    ORDER BY teamname
+
+
+    SELECT stadium, COUNT(*)
+    FROM game JOIN goal ON id = matchid
+    GROUP BY stadium
+    ORDER BY stadium
+
+
+    SELECT matchid,mdate, COUNT(*)
+    FROM game JOIN goal ON matchid = id 
+    WHERE (team1 = 'POL' OR team2 = 'POL')
+    GROUP BY matchid
+
+
+    SELECT matchid,mdate, COUNT(*)
+    FROM game JOIN goal ON matchid = id 
+    WHERE teamid = 'GER'
+    GROUP BY matchid
+
+
+    SELECT DISTINCT mdate, team1,
+    SUM(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score1, team2, SUM(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
+    FROM game JOIN goal ON matchid = id
+    GROUP BY matchid
+    ORDER BY mdate,team1,team2
+
+
+## More JOIN operations
+
+    SELECT id, title
+    FROM movie
+    WHERE yr=1962
+
+
+    SELECT yr
+    FROM movie
+    WHERE title='Citizen Kane'
+
+
+    SELECT id, title, yr
+    FROM movie
+    WHERE title LIKE '%Star Trek%'
+    ORDER BY yr
+
+
+    SELECT title
+    FROM movie
+    WHERE id IN (11768, 11955, 21191)
+    ORDER BY title
+
+
+    SELECT DISTINCT(actor.id)
+    FROM movie JOIN casting ON movie.id = casting.movieid 
+              JOIN actor ON casting.actorid = actor.id
+    WHERE actor.name = 'Glenn Close'
+
+
+    
 
