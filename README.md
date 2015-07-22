@@ -101,11 +101,80 @@ Nick Sarlo (https://github.com/sicknarlo)
 
 
 
+## Select from Nobel
+
+    SELECT yr, subject, winner
+    FROM nobel
+   WHERE yr = 1950
+
+    SELECT winner
+    FROM nobel
+    WHERE yr = 1962
+    AND subject = 'Literature'
+
+    SELECT yr, subject
+    FROM nobel
+    WHERE winner = 'Albert Einstein'
+
+    SELECT winner
+    FROM nobel
+    WHERE yr >= 2000 and subject = 'Peace'
+
+    SELECT yr, subject, winner
+    FROM nobel
+    WHERE yr BETWEEN 1980 AND 1989 AND subject = 'Literature'
 
 
+    SELECT *
+    FROM nobel
+    WHERE winner IN ('Theodore Roosevelt', 'Woodrow Wilson', 'Jimmy Carter')
 
 
+    SELECT winner
+    FROM nobel
+    WHERE winner LIKE 'John%'
 
 
+    SELECT *
+    FROM nobel
+    WHERE (subject = 'Physics' AND yr = 1980) OR (subject = 'Chemistry' AND yr = 1984)
+
+
+    SELECT *
+    FROM nobel
+    WHERE subject != 'Chemistry' AND subject != 'Medicine' AND yr = 1980
+
+
+    SELECT *
+    FROM nobel
+    WHERE (subject = 'Medicine' AND yr < 1910)
+    OR (subject = 'Literature' AND yr >= 2004)
+
+
+    SELECT *
+    FROM nobel
+    WHERE winner = 'Peter Grünberg'
+
+
+    SELECT *
+    FROM nobel
+    WHERE winner = 'Eugene O\'Neill'
+
+
+    SELECT winner, yr, subject
+    FROM nobel
+    WHERE winner LIKE 'Sir%'
+    ORDER BY yr DESC, winner ASC
+
+
+    SELECT winner, subject, subject IN ('Physics','Chemistry')
+    FROM nobel
+    WHERE yr=1984
+    ORDER BY subject IN ('Physics','Chemistry') ASC,subject, winner
+
+
+## [The JOIN Operation](http://sqlzoo.net/wiki/The_JOIN_operation)
+
+    
 
 
