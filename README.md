@@ -173,7 +173,37 @@ Nick Sarlo (https://github.com/sicknarlo)
     ORDER BY subject IN ('Physics','Chemistry') ASC,subject, winner
 
 
+
 ## [The JOIN Operation](http://sqlzoo.net/wiki/The_JOIN_operation)
+
+
+    SELECT matchid, player
+    FROM goal 
+    WHERE teamid = 'GER'
+
+    SELECT DISTINCT id,stadium,team1,team2
+    FROM game JOIN goal ON goal.matchid = game.id
+    WHERE id = 1012
+
+    SELECT player,teamid,mdate
+    FROM game JOIN goal ON (id=matchid)
+    WHERE teamid='GER'
+
+    SELECT team1,team2,player
+    FROM game JOIN goal ON (id=matchid)
+    WHERE player LIKE 'Mario%'
+
+    SELECT player, teamid, coach, gtime
+    FROM goal JOIN eteam ON teamid=id
+    WHERE gtime<=10
+
+    SELECT mdate,teamname
+    FROM game JOIN eteam ON (team1=eteam.id)
+    WHERE coach = 'Fernando Santos'
+
+    SELECT player
+    FROM goal JOIN game ON goal.matchid=id
+    WHERE stadium = 'National Stadium, Warsaw'
 
     
 
