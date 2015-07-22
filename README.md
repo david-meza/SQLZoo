@@ -298,10 +298,12 @@ Nick Sarlo (https://github.com/sicknarlo)
                  JOIN movie ON casting.movieid=movie.id
     WHERE actor.name ='Harrison Ford'AND casting.ord > 1
 
+
     SELECT title, name
     FROM actor JOIN casting ON casting.actorid = actor.id
                JOIN movie   ON casting.movieid = movie.id
     WHERE ord = 1 AND movie.yr = 1962
+
 
     SELECT yr,COUNT(title) FROM
       movie JOIN casting ON movie.id=movieid
@@ -315,3 +317,112 @@ Nick Sarlo (https://github.com/sicknarlo)
      WHERE name='John Travolta'
      GROUP BY yr) AS t
     )
+
+
+    SELECT title, actor.name
+    FROM casting JOIN movie ON casting.movieid = movie.id
+                       JOIN actor ON casting.actorid = actor.id
+    WHERE ord = 1 AND movieid IN (SELECT movieid FROM casting
+    WHERE actorid IN (
+    SELECT id FROM actor
+    WHERE name='Julie Andrews'))
+
+
+    SELECT name
+    FROM casting JOIN actor ON casting.actorid=actor.id
+                JOIN movie on casting.movieid=movie.id
+    WHERE ord = 1
+    GROUP BY name
+    HAVING SUM(ord) >= 30
+    ORDER BY SUM(ord) desc
+
+    -- This one was showing errors
+
+    SELECT title, count(actorid)
+    FROM casting JOIN actor ON casting.actorid=actor.id
+                JOIN movie on casting.movieid=movie.id
+    WHERE yr = 1978
+    GROUP BY movie.id
+    ORDER BY COUNT(actorid) DESC
+
+
+    SELECT DISTINCT name
+    FROM casting  JOIN actor ON casting.actorid=actor.id
+                  JOIN movie on casting.movieid=movie.id
+    WHERE movieid IN (SELECT movieid
+                      FROM casting JOIN actor ON casting.actorid=actor.id AND actor.name = 'Art Garfunkel'
+                      JOIN movie on casting.movieid=movie.id) 
+    AND name != 'Art Garfunkel'
+    ORDER BY name ASC
+
+
+## [SUM and COUNT](http://sqlzoo.net/wiki/SUM_and_COUNT)
+
+    SELECT SUM(population)
+    FROM world
+
+
+    SELECT DISTINCT continent
+    FROM world
+
+
+    SELECT SUM(gdp)
+    FROM world
+    WHERE continent = 'Africa'
+
+
+    SELECT COUNT(area)
+    FROM world
+    WHERE area > 1000000
+
+
+
+    SELECT SUM(population)
+    FROM world
+    WHERE name IN ('France','Germany','Spain')
+
+
+    SELECT continent, COUNT(name)
+    FROM world
+    GROUP BY continent
+
+
+
+    SELECT continent, COUNT(name)
+    FROM world
+    WHERE population > 10000000
+    GROUP BY continent
+
+
+
+    SELECT continent
+    FROM world
+    GROUP BY continent
+    HAVING SUM(population) >= 100000000
+
+
+
+## [SELECT within SELECT](http://sqlzoo.net/wiki/SELECT_within_SELECT_Tutorial)
+
+
+    SELECT name FROM world
+    WHERE population >
+      (SELECT population FROM world
+      WHERE name='Russia')
+
+
+    SELECT name FROM world
+    WHERE continent = 'Europe' AND gdp/population >
+      (SELECT gdp/population FROM world
+      WHERE name='United Kingdom')
+
+
+
+
+
+
+
+
+
+
+
