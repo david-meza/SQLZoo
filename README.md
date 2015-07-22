@@ -275,6 +275,43 @@ Nick Sarlo (https://github.com/sicknarlo)
               JOIN actor ON casting.actorid = actor.id
     WHERE actor.name = 'Glenn Close'
 
+    SELECT id
+    FROM movie
+    WHERE title='Casablanca'
 
-    
+    SELECT name
+    FROM casting JOIN actor ON casting.actorid = actor.id
+    WHERE movieid=11768
 
+    SELECT name
+    FROM casting JOIN actor ON casting.actorid = actor.id
+                 JOIN movie ON casting.movieid = movie.id
+    WHERE title='Alien'
+
+    SELECT title
+    FROM casting JOIN actor ON casting.actorid=actor.id
+                 JOIN movie ON casting.movieid=movie.id
+    WHERE actor.name='Harrison Ford'    
+
+    SELECT title
+    FROM casting JOIN actor ON casting.actorid=actor.id
+                 JOIN movie ON casting.movieid=movie.id
+    WHERE actor.name ='Harrison Ford'AND casting.ord > 1
+
+    SELECT title, name
+    FROM actor JOIN casting ON casting.actorid = actor.id
+               JOIN movie   ON casting.movieid = movie.id
+    WHERE ord = 1 AND movie.yr = 1962
+
+    SELECT yr,COUNT(title) FROM
+      movie JOIN casting ON movie.id=movieid
+             JOIN actor   ON actorid=actor.id
+    WHERE name='John Travolta'
+    GROUP BY yr
+    HAVING COUNT(title)=(SELECT MAX(c) FROM
+    (SELECT yr,COUNT(title) AS c FROM
+       movie JOIN casting ON movie.id=movieid
+             JOIN actor   ON actorid=actor.id
+     WHERE name='John Travolta'
+     GROUP BY yr) AS t
+    )
