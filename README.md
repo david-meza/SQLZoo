@@ -416,13 +416,96 @@ Nick Sarlo (https://github.com/sicknarlo)
       (SELECT gdp/population FROM world
       WHERE name='United Kingdom')
 
+      SELECT name, continent
+        FROM world
+        WHERE continent IN (
+          SELECT continent
+          FROM world
+          WHERE name IN ('Argentina', 'Australia')
+              )
+        ORDER BY name ASC
+
+        SELECT name, population
+        FROM world
+        WHERE population > (
+            SELECT population
+            FROM world
+            WHERE name='Canada'
+            ) AND population < (
+            SELECT population
+            FROM world
+            WHERE name='Poland'
+            )
+
+    SELECT name, CONCAT(ROUND((population / (
+    SELECT population
+    FROM world
+    WHERE name='Germany'
+    )) * 100, 0), '%')
+    FROM world
+    where continent = 'Europe'
+
+    SELECT name
+    FROM world
+    WHERE gdp > ALL(SELECT gdp
+                      FROM world
+                         WHERE continent='Europe' AND gdp IS NOT NULL)
 
 
+    SELECT continent, name FROM world x
+      WHERE name <= ALL
+        (SELECT name FROM world y
+            WHERE y.continent=x.continent
+              AND area>0)
 
+    SELECT name, continent, population
+    FROM world x
+    WHERE 25000000 >= ALL(SELECT population
+    FROM world
+    WHERE continent= x.continent)
 
+    SELECT name, continent
+    FROM world x
+    WHERE population / 3 > ALL(SELECT population
+    FROM world
+    WHERE continent = x.continent AND name != x.name)
 
+    SELECT name
+    FROM teacher
+    WHERE dept IS NULL
 
+    SELECT teacher.name, dept.name
+     FROM teacher LEFT JOIN dept
+             ON (teacher.dept=dept.id)
 
+     SELECT teacher.name, dept.name
+     FROM teacher RIGHT JOIN dept
+           ON (teacher.dept=dept.id)
 
+    SELECT name, COALESCE(mobile, '07986 444 2266')
+    FROM teacher
+
+    SELECT teacher.name, COALESCE(dept.name, 'None')
+     FROM teacher LEFT JOIN dept
+           ON (teacher.dept=dept.id)
+
+    SELECT COUNT(*), COUNT(mobile)
+    FROM teacher
+
+    SELECT dept.name, COUNT(teacher.name)
+    FROM teacher RIGHT JOIN dept ON teacher.dept=dept.id
+    GROUP BY dept.name
+
+    SELECT name,
+    CASE WHEN dept = 1 THEN 'Sci'
+         WHEN dept = 2 THEN 'Sci'
+         ELSE  'Art' END
+    FROM teacher
+
+    SELECT name,
+    CASE WHEN dept = 1 OR dept = 2 THEN 'Sci'
+         WHEN dept = 3 THEN 'Art'
+         ELSE 'None' END
+    FROM teacher
 
 
